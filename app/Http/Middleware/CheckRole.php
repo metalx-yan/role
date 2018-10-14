@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class CheckRole
 {
@@ -16,7 +17,7 @@ class CheckRole
     public function handle($request, Closure $next, $role)
     {
         if (!$request->user()->hasRole($role)) {
-            abort(401, 'Gagal');
+            return redirect()->back();
         }
             return $next($request);
     }

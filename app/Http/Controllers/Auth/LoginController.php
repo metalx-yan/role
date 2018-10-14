@@ -26,7 +26,6 @@ class LoginController extends Controller
      *
      * @var string
      */
-
     protected $redirectTo;
 
     protected $username = 'username';
@@ -43,21 +42,13 @@ class LoginController extends Controller
 
     public function redirectTo(){
 
-        // User role
-        $role = Auth::user()->roles()->whereIn('name', ['admin','superadmin'])->first()->name;
-
-        // Check user role
-        switch ($role) {
-            case 'admin':
-                return '/admin';
-                break;
-            case 'superadmin':
-                return '/superadmin';
-                break;
-            default:
-                return '/login';
-                break;
-        }
+        if (Auth::check() && Auth::user()->role_id == 1 ) {
+            return '/admin';
+        } 
+        else
+        {
+            return '/superadmin';
+        } 
     }
     /**
      * @return string
